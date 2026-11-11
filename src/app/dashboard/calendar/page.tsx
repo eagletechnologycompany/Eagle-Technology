@@ -16,7 +16,9 @@ export default async function CalendarPage() {
     db
       .prepare("SELECT id, name FROM projects WHERE archived_at IS NULL")
       .all() as Array<{ id: string; name: string }>
-  ).filter((p) => accessible.has(p.id));
+  )
+    .filter((p) => accessible.has(p.id))
+    .map((p) => ({ id: String(p.id), name: String(p.name) }));
 
   const tasks = db
     .prepare(
