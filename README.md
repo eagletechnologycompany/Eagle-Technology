@@ -79,16 +79,24 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 │   ├── workflows/ci.yml       # Automated lint, typecheck, test & build CI
 │   └── PULL_REQUEST_TEMPLATE.md
 ├── docs/
-│   ├── BRAND_GUIDELINES.md    # Logo, color tokens, and tone rules
-│   └── CONTENT_INVENTORY.md   # Checklist of placeholders to replace before launch
+│   ├── BRAND_GUIDELINES.md             # Logo, color tokens, and tone rules
+│   ├── CONTENT_INVENTORY.md            # Checklist of placeholders to replace before launch
+│   ├── DASHBOARD_IMPLEMENTATION_PLAN.md # Founder Operations Dashboard architecture
+│   └── OPERATIONS_SECURITY.md          # Account lifecycle, RBAC, backups & audit review
 ├── public/
-│   └── brand/                 # Clean SVG & transparent PNG logo assets
+│   └── brand/                          # Clean SVG & transparent PNG logo assets
 ├── src/
-│   ├── app/                   # Next.js App Router pages & /api/contact route
-│   ├── components/            # Layout (Header, Footer), ContactForm, UI primitives
-│   ├── data/                  # Structured company, team, solutions, work & insights data
-│   ├── lib/                   # Shared validation & domain helpers
-│   └── test/                  # Automated Vitest test suite
+│   ├── app/
+│   │   ├── (public)/                   # Public Eagle Technology website routes
+│   │   ├── api/                        # Contact, Auth & Founder Dashboard APIs
+│   │   ├── dashboard/                  # Private authenticated Founder Operations workspace
+│   │   ├── login/                      # Private founder portal sign-in
+│   │   └── unauthorized/               # Role permission restriction page
+│   ├── components/                     # Public layout, contact form, dashboard shell & views
+│   ├── data/                           # Public website structured content
+│   ├── lib/                            # Shared constants, RBAC types & validation
+│   ├── server/                         # SQLite DB, migrations, auth, RBAC & private file storage
+│   └── test/                           # Automated Vitest test suite
 ├── CONTRIBUTING.md
 ├── CODE_OF_CONDUCT.md
 └── SECURITY.md

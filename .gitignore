@@ -30,6 +30,13 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+# local sqlite & private document storage
+/data/
+/storage/
+*.db
+*.db-wal
+*.db-shm
+
 # env files (can opt-in for committing if needed)
 .env*
 !.env.example
