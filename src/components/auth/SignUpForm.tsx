@@ -109,20 +109,11 @@ export function SignUpForm() {
       <div className="rounded-2xl border border-[var(--color-soft-sand)] bg-white p-8 md:p-10 shadow-lg">
         {/* Card Header */}
         <div className="mb-6">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-pale-gold)] px-3 py-1 text-[11px] font-semibold text-[var(--color-dark-brown)]">
               <ShieldCheck className="h-3.5 w-3.5 text-[var(--color-brown-gold)]" />
               Customer &amp; Partner Platform
             </span>
-            <button
-              type="button"
-              onClick={handleQuickDemoFill}
-              className="inline-flex items-center gap-1 text-[11px] font-semibold text-[var(--color-brown-gold)] hover:underline"
-              title="Auto-fill sample organization credentials"
-            >
-              <Sparkles className="h-3 w-3" />
-              Demo Pre-fill
-            </button>
           </div>
 
           <h2 className="mt-3 text-2xl font-bold tracking-tight text-[var(--color-dark-brown)] md:text-3xl">
@@ -312,6 +303,16 @@ export function SignUpForm() {
           <Link href="/login" className="font-semibold text-[var(--color-brown-gold)] hover:underline">
             Sign In to Platform
           </Link>
+          <div className="mt-3">
+            <button
+              type="button"
+              onClick={handleQuickDemoFill}
+              className="inline-flex items-center gap-1.5 text-[11px] font-medium text-[var(--color-muted-brown)] hover:text-[var(--color-brown-gold)] transition-colors"
+            >
+              <Sparkles className="h-3 w-3 text-[var(--color-brown-gold)]" />
+              Demo Pre-fill (Sample Partner)
+            </button>
+          </div>
         </div>
       </div>
     </div>

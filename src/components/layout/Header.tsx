@@ -147,7 +147,7 @@ export function Header() {
             <Link
               href="/contact"
               onClick={() => setMobileOpen(false)}
-              className="mt-1 inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--color-brown-gold)] px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-[var(--accent-hover)]"
+              className="mt-1 inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-[var(--color-brown-gold)] px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-[var(--accent-hover)]"
             >
               Start a Project
               <ArrowRight className="h-4 w-4" aria-hidden="true" />

@@ -34,7 +34,7 @@ export default function SignUpPage() {
         </div>
 
         {/* Split Screen Container */}
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
+        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12">
           {/* Left Hero Brand Showcase */}
           <div className="lg:col-span-6">
             <div className="relative overflow-hidden rounded-3xl border border-[var(--color-brown-gold)]/30 bg-gradient-to-b from-[var(--color-deep-brown)] to-[#180e05] p-8 text-white shadow-2xl md:p-12">

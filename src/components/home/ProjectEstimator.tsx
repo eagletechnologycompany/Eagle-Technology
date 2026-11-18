@@ -234,25 +234,39 @@ export function ProjectEstimator() {
             </div>
 
             {/* Milestone Payment Schedule Breakdown */}
-            <div className="mt-5 rounded-xl bg-white p-3.5 border border-[var(--color-soft-sand)] text-[11px] space-y-1.5">
-              <p className="font-bold text-[var(--color-dark-brown)] mb-1">
-                Standard Milestone Distribution:
-              </p>
-              <div className="flex justify-between text-[var(--color-muted-brown)]">
-                <span>Phase 1: Architecture &amp; Discovery</span>
-                <span className="font-semibold text-[var(--color-dark-brown)]">25%</span>
+            <div className="mt-5 rounded-xl bg-white p-3.5 border border-[var(--color-soft-sand)] text-[11px] space-y-2">
+              <div className="flex items-center justify-between">
+                <p className="font-bold text-[var(--color-dark-brown)]">
+                  Milestone-Gated Distribution:
+                </p>
+                <span className="text-[10px] text-[var(--color-muted-brown)] font-mono">100% Total</span>
               </div>
-              <div className="flex justify-between text-[var(--color-muted-brown)]">
-                <span>Phase 2: Core Engineering &amp; UI</span>
-                <span className="font-semibold text-[var(--color-dark-brown)]">40%</span>
+
+              {/* Segmented Progress Bar */}
+              <div className="flex h-2 w-full overflow-hidden rounded-full bg-stone-100 gap-0.5">
+                <div className="h-full bg-[var(--color-brown-gold)]/60 rounded-l-full" style={{ width: "25%" }} title="Phase 1: 25%" />
+                <div className="h-full bg-[var(--color-brown-gold)]" style={{ width: "40%" }} title="Phase 2: 40%" />
+                <div className="h-full bg-[var(--color-dark-brown)]/70" style={{ width: "20%" }} title="Phase 3: 20%" />
+                <div className="h-full bg-[var(--color-dark-brown)] rounded-r-full" style={{ width: "15%" }} title="Phase 4: 15%" />
               </div>
-              <div className="flex justify-between text-[var(--color-muted-brown)]">
-                <span>Phase 3: Integration &amp; Sandbox</span>
-                <span className="font-semibold text-[var(--color-dark-brown)]">20%</span>
-              </div>
-              <div className="flex justify-between text-[var(--color-muted-brown)]">
-                <span>Phase 4: Launch &amp; Deliverables Sign-off</span>
-                <span className="font-semibold text-[var(--color-dark-brown)]">15%</span>
+
+              <div className="pt-1 space-y-1.5">
+                <div className="flex items-center justify-between text-[var(--color-muted-brown)]">
+                  <span className="truncate pr-2">Phase 1: Architecture &amp; Discovery</span>
+                  <span className="font-semibold font-mono text-[var(--color-dark-brown)] shrink-0">25%</span>
+                </div>
+                <div className="flex items-center justify-between text-[var(--color-muted-brown)]">
+                  <span className="truncate pr-2">Phase 2: Core Engineering &amp; UI</span>
+                  <span className="font-semibold font-mono text-[var(--color-dark-brown)] shrink-0">40%</span>
+                </div>
+                <div className="flex items-center justify-between text-[var(--color-muted-brown)]">
+                  <span className="truncate pr-2">Phase 3: Integration &amp; Testing</span>
+                  <span className="font-semibold font-mono text-[var(--color-dark-brown)] shrink-0">20%</span>
+                </div>
+                <div className="flex items-center justify-between text-[var(--color-muted-brown)]">
+                  <span className="truncate pr-2">Phase 4: Final Launch &amp; Handoff</span>
+                  <span className="font-semibold font-mono text-[var(--color-dark-brown)] shrink-0">15%</span>
+                </div>
               </div>
             </div>
           </div>
