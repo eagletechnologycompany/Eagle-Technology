@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Layers, ShieldCheck, Users } from "lucide-react";
-import { EagleLogo } from "@/components/ui/EagleLogo";
 import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { MotionReveal } from "@/components/ui/MotionReveal";
@@ -14,6 +13,9 @@ import {
 } from "@/data/company";
 import { SOLUTION_AREAS } from "@/data/solutions";
 import { WORK_DEMONSTRATIONS } from "@/data/work";
+import { EagleEyeRadar } from "@/components/home/EagleEyeRadar";
+import { TechPlayground } from "@/components/home/TechPlayground";
+import { ProjectEstimator } from "@/components/home/ProjectEstimator";
 
 export default function HomePage() {
   return (
@@ -112,21 +114,12 @@ export default function HomePage() {
                 <div className="absolute bottom-3 left-3 h-3 w-3 border-b border-l border-[var(--color-brown-gold)]/50" />
                 <div className="absolute bottom-3 right-3 h-3 w-3 border-b border-r border-[var(--color-brown-gold)]/50" />
 
-                <div className="flex flex-col items-center border-b border-[var(--color-muted-brown)]/30 pb-8 text-center">
-                  <div className="relative">
-                    <div className="absolute -inset-4 rounded-full bg-[var(--color-brown-gold)]/10 blur-xl" />
-                    <div className="relative">
-                      <EagleLogo
-                        size={210}
-                        color="var(--color-white)"
-                        accentColor="var(--color-brown-gold)"
-                      />
-                    </div>
-                  </div>
-                  <p className="mt-5 text-xs font-semibold tracking-[0.2em] text-[var(--color-brown-gold)] uppercase">
+                <div className="border-b border-[var(--color-muted-brown)]/30 pb-6 text-center">
+                  <EagleEyeRadar />
+                  <p className="mt-3 text-xs font-semibold tracking-[0.2em] text-[var(--color-brown-gold)] uppercase">
                     Official Brand Identity
                   </p>
-                  <p className="mt-2 max-w-xs text-sm text-[var(--color-soft-sand)]/80">
+                  <p className="mt-1.5 max-w-xs mx-auto text-xs text-[var(--color-soft-sand)]/80">
                     Vision, practical engineering, and human collaboration built on
                     substance rather than appearance.
                   </p>
@@ -257,7 +250,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. Why Choose Eagle */}
+      {/* 4. Interactive Developer Platform & Engine Showcase */}
+      <section className="border-b border-[var(--color-dark-brown)] bg-[var(--color-deep-brown)] py-20 md:py-28">
+        <div className="section-padding">
+          <TechPlayground />
+        </div>
+      </section>
+
+      {/* 5. Why Choose Eagle */}
       <section className="border-b border-[var(--color-soft-sand)] bg-white py-20 md:py-24">
         <div className="section-padding">
           <SectionHeading
@@ -466,11 +466,22 @@ export default function HomePage() {
             <Button href="/login" variant="secondary" size="md">
               Sign In to Platform
             </Button>
+            <Button href="/signup" size="md" className="gap-1.5">
+              Create Customer Account
+              <ArrowRight className="h-4 w-4" />
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* 8. Final CTA */}
+      {/* 8. Interactive Project Discovery & Scoping Estimator */}
+      <section className="border-b border-[var(--color-soft-sand)] bg-white py-20 md:py-24">
+        <div className="section-padding max-w-6xl mx-auto">
+          <ProjectEstimator />
+        </div>
+      </section>
+
+      {/* 9. Final CTA */}
       <section className="bg-[var(--color-dark-brown)] py-20 text-white">
         <div className="section-padding flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
           <div className="max-w-2xl">

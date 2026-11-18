@@ -69,9 +69,16 @@ export function Header() {
         <div className="flex items-center gap-2 sm:gap-3">
           <Link
             href="/login"
-            className="hidden sm:inline-flex items-center text-xs font-semibold text-[var(--color-dark-brown)] hover:text-[var(--color-brown-gold)] px-3 py-2 rounded-lg hover:bg-[var(--color-pale-gold)] transition-colors"
+            className="hidden sm:inline-flex items-center text-xs font-semibold text-[var(--color-dark-brown)] hover:text-[var(--color-brown-gold)] px-2.5 py-1.5 rounded-lg hover:bg-[var(--color-pale-gold)] transition-colors"
           >
             Sign In
+          </Link>
+
+          <Link
+            href="/signup"
+            className="hidden sm:inline-flex items-center text-xs font-semibold text-[var(--color-brown-gold)] border border-[var(--color-brown-gold)]/40 hover:bg-[var(--color-pale-gold)] px-3 py-1.5 rounded-lg transition-colors"
+          >
+            Sign Up
           </Link>
 
           <Link
@@ -121,13 +128,22 @@ export function Header() {
                 </Link>
               );
             })}
-            <Link
-              href="/login"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-4 py-2.5 text-sm font-semibold text-[var(--color-dark-brown)] hover:bg-[var(--color-pale-gold)]"
-            >
-              Sign In (Client &amp; Founder)
-            </Link>
+            <div className="grid grid-cols-2 gap-2 mt-2">
+              <Link
+                href="/login"
+                onClick={() => setMobileOpen(false)}
+                className="rounded-lg border border-[var(--color-soft-sand)] py-2 text-center text-xs font-semibold text-[var(--color-dark-brown)] hover:bg-[var(--color-pale-gold)]"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/signup"
+                onClick={() => setMobileOpen(false)}
+                className="rounded-lg border border-[var(--color-brown-gold)]/40 bg-[var(--color-pale-gold)] py-2 text-center text-xs font-semibold text-[var(--color-dark-brown)]"
+              >
+                Sign Up
+              </Link>
+            </div>
             <Link
               href="/contact"
               onClick={() => setMobileOpen(false)}

@@ -20,6 +20,7 @@ const footerLinks = {
   ],
   platform: [
     { href: "/login", label: "Platform Sign In" },
+    { href: "/signup", label: "Create Customer Account" },
     { href: "/portal", label: "Customer & Partner Portal" },
     { href: "/portal/developer", label: "Developer Sandbox & SDK" },
     { href: "/dashboard", label: "Founder Operations Workspace" },

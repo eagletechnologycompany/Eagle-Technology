@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { requirePortalPage } from "@/server/auth/session";
 import { getDb } from "@/server/db/client";
+import { OnboardingWalkthrough } from "@/components/portal/OnboardingWalkthrough";
 
 export default async function PortalOverviewPage() {
   const user = await requirePortalPage();
@@ -74,9 +75,12 @@ export default async function PortalOverviewPage() {
       <div className="rounded-2xl border border-[var(--color-soft-sand)] bg-white p-6 sm:p-8 shadow-xs">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full bg-[var(--color-pale-gold)] px-3 py-1 text-xs font-semibold text-[var(--color-dark-brown)]">
-              <span className="h-2 w-2 rounded-full bg-[var(--color-brown-gold)] animate-pulse" />
-              Active Client Engagement
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="inline-flex items-center gap-2 rounded-full bg-[var(--color-pale-gold)] px-3 py-1 text-xs font-semibold text-[var(--color-dark-brown)]">
+                <span className="h-2 w-2 rounded-full bg-[var(--color-brown-gold)] animate-pulse" />
+                Active Client Engagement
+              </div>
+              <OnboardingWalkthrough userDisplayLabel={user.displayLabel} />
             </div>
             <h1 className="mt-2 text-2xl font-bold tracking-tight text-[var(--color-dark-brown)] sm:text-3xl">
               Welcome, {user.displayLabel}

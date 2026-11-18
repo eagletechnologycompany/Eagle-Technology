@@ -6,6 +6,7 @@ import { getDb } from "@/server/db/client";
 import {
   generateId,
   generateSessionToken,
+  hashPassword,
   hashSessionToken,
   signSessionCookieValue,
   verifyPassword,
@@ -123,6 +124,118 @@ export function authenticateFounderCredentials(
       roleTitle: user.role_title,
       shortTitle: user.short_title,
       displayLabel: user.display_label,
+      permissions,
+      sessionId,
+      expiresAt,
+    },
+  };
+}
+
+export function registerClientAccount(params: {
+  fullName: string;
+  organization: string;
+  email: string;
+  password: string;
+  useCase?: string;
+  userAgent?: string;
+}): { ok: true; founder: AuthenticatedFounder; cookieValue: string } | { ok: false; reason: string } {
+  const db = getDb();
+  const normalizedEmail = params.email.trim().toLowerCase();
+  const trimmedName = params.fullName.trim();
+  const trimmedOrg = params.organization.trim();
+
+  if (!trimmedName || trimmedName.length < 2) {
+    return { ok: false, reason: "Full name must be at least 2 characters long." };
+  }
+
+  if (!trimmedOrg || trimmedOrg.length < 2) {
+    return { ok: false, reason: "Organization or company name must be at least 2 characters long." };
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(normalizedEmail)) {
+    return { ok: false, reason: "Please enter a valid work email address." };
+  }
+
+  if (!params.password || params.password.length < 8) {
+    return { ok: false, reason: "Password must be at least 8 characters long." };
+  }
+
+  // Check if username/email already registered
+  const existing = db
+    .prepare("SELECT id FROM users WHERE lower(username) = ?")
+    .get(normalizedEmail) as { id: string } | undefined;
+
+  if (existing) {
+    return {
+      ok: false,
+      reason: "An account with this email address already exists. Please sign in instead.",
+    };
+  }
+
+  const newUserId = generateId("usr");
+  const now = new Date();
+  const nowIso = now.toISOString();
+  const passwordHash = hashPassword(params.password);
+  const displayLabel = `${trimmedName} (${trimmedOrg})`;
+
+  // Insert user as client role
+  db.prepare(
+    `INSERT INTO users (id, username, role_id, display_label, password_hash, is_active, created_at, updated_at)
+     VALUES (?, ?, 'client', ?, ?, 1, ?, ?)`
+  ).run(newUserId, normalizedEmail, displayLabel, passwordHash, nowIso, nowIso);
+
+  // Insert team_member_profile for profile integrity
+  const responsibilities = [
+    "Milestone Review & Verification",
+    "Scope Inquiries & Requests",
+    "Developer Sandbox Access",
+    params.useCase || "Platform Evaluation",
+  ];
+  db.prepare(
+    `INSERT OR IGNORE INTO team_member_profiles (user_id, role_id, placeholder_name, responsibilities_json, capacity_note, updated_at)
+     VALUES (?, 'client', ?, ?, ?, ?)`
+  ).run(
+    newUserId,
+    trimmedName,
+    JSON.stringify(responsibilities),
+    `Organization: ${trimmedOrg}`,
+    nowIso
+  );
+
+  // Create session
+  const rawToken = generateSessionToken();
+  const tokenHash = hashSessionToken(rawToken);
+  const sessionId = generateId("ses");
+  const expiresAt = new Date(now.getTime() + SESSION_DURATION_MS).toISOString();
+
+  db.prepare(
+    `INSERT INTO sessions (id, token_hash, user_id, expires_at, user_agent, created_at)
+     VALUES (?, ?, ?, ?, ?, ?)`
+  ).run(sessionId, tokenHash, newUserId, expiresAt, params.userAgent ?? "", nowIso);
+
+  const permissions = getPermissionsForRole("client");
+
+  logAudit(db, {
+    actorUserId: newUserId,
+    actorRole: "client",
+    action: "auth.signup",
+    targetType: "user",
+    targetId: newUserId,
+    status: "success",
+    details: { organization: trimmedOrg, useCase: params.useCase || "Commercial Client" },
+  });
+
+  return {
+    ok: true,
+    cookieValue: signSessionCookieValue(rawToken),
+    founder: {
+      userId: newUserId,
+      username: normalizedEmail,
+      roleId: "client",
+      roleTitle: "Registered Customer",
+      shortTitle: "Customer",
+      displayLabel,
       permissions,
       sessionId,
       expiresAt,

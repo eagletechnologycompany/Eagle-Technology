@@ -55,7 +55,21 @@ export function LoginForm({ sessionExpired }: { sessionExpired: boolean }) {
             <Lock className="h-3 w-3 text-[var(--color-brown-gold)]" aria-hidden="true" />
             Private Customer &amp; Founder Platform
           </div>
-          <h1 className="mt-3 text-2xl font-bold text-[var(--color-dark-brown)]">
+
+          {/* Dual Tab Switcher */}
+          <div className="mt-4 grid w-full grid-cols-2 rounded-xl bg-[var(--color-warm-off-white)] p-1 text-xs font-semibold">
+            <span className="rounded-lg bg-white py-1.5 text-[var(--color-dark-brown)] shadow-xs">
+              Sign In
+            </span>
+            <Link
+              href="/signup"
+              className="rounded-lg py-1.5 text-[var(--color-muted-brown)] transition-colors hover:text-[var(--color-dark-brown)]"
+            >
+              Create Account
+            </Link>
+          </div>
+
+          <h1 className="mt-4 text-2xl font-bold text-[var(--color-dark-brown)]">
             Platform Sign In
           </h1>
           <p className="mt-1 text-xs text-[var(--color-muted-brown)]">
@@ -132,6 +146,55 @@ export function LoginForm({ sessionExpired }: { sessionExpired: boolean }) {
             {loading ? "Signing in..." : "Sign In to Workspace"}
           </button>
         </form>
+
+        {/* Demo Reviewer Role Fillers */}
+        <div className="mt-5 border-t border-[var(--color-soft-sand)] pt-4">
+          <p className="mb-2 text-[10px] font-bold text-[var(--color-muted-brown)] uppercase tracking-wider">
+            Reviewer Role Quick Fill:
+          </p>
+          <div className="grid grid-cols-2 gap-1.5 text-xs">
+            <button
+              type="button"
+              onClick={() => {
+                setUsername("ceo");
+                setPassword("EagleFounders!2026");
+              }}
+              className="rounded-md border border-[var(--color-soft-sand)] bg-[var(--color-warm-off-white)] px-2 py-1.5 text-left text-[11px] font-semibold text-[var(--color-dark-brown)] hover:bg-[var(--color-pale-gold)] transition-colors"
+            >
+              👑 Founder &amp; CEO
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setUsername("client");
+                setPassword("EagleClient!2026");
+              }}
+              className="rounded-md border border-[var(--color-soft-sand)] bg-[var(--color-warm-off-white)] px-2 py-1.5 text-left text-[11px] font-semibold text-[var(--color-dark-brown)] hover:bg-[var(--color-pale-gold)] transition-colors"
+            >
+              💼 Client (Portal)
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setUsername("backend");
+                setPassword("EagleFounders!2026");
+              }}
+              className="rounded-md border border-[var(--color-soft-sand)] bg-[var(--color-warm-off-white)] px-2 py-1.5 text-left text-[11px] font-semibold text-[var(--color-dark-brown)] hover:bg-[var(--color-pale-gold)] transition-colors"
+            >
+              ⚙️ Backend Dev
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setUsername("ai-automation");
+                setPassword("EagleFounders!2026");
+              }}
+              className="rounded-md border border-[var(--color-soft-sand)] bg-[var(--color-warm-off-white)] px-2 py-1.5 text-left text-[11px] font-semibold text-[var(--color-dark-brown)] hover:bg-[var(--color-pale-gold)] transition-colors"
+            >
+              🤖 AI Specialist
+            </button>
+          </div>
+        </div>
 
         <div className="mt-6 rounded-xl border border-[var(--color-soft-sand)] bg-[var(--color-warm-off-white)] p-3.5 text-[11px] leading-relaxed text-[var(--color-muted-brown)]">
           <p className="font-semibold text-[var(--color-dark-brown)]">
