@@ -35,6 +35,7 @@ export function getDb(): DatabaseSync {
 
   const db = new DatabaseSync(targetPath);
   db.exec("PRAGMA foreign_keys = ON;");
+  db.exec("PRAGMA busy_timeout = 5000;");
   if (targetPath !== ":memory:") {
     db.exec("PRAGMA journal_mode = WAL;");
   }

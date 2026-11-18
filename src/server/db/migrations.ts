@@ -345,6 +345,28 @@ const MIGRATIONS: Migration[] = [
       CREATE INDEX IF NOT EXISTS idx_dev_keys_user ON developer_sandbox_keys(user_id);
     `,
   },
+  {
+    version: 3,
+    name: "staff_and_founder_invitations",
+    sql: `
+      CREATE TABLE IF NOT EXISTS staff_invitations (
+        id TEXT PRIMARY KEY,
+        token_hash TEXT NOT NULL UNIQUE,
+        recipient_email TEXT NOT NULL,
+        role_id TEXT NOT NULL REFERENCES roles(id),
+        invited_by TEXT NOT NULL REFERENCES users(id),
+        expires_at TEXT NOT NULL,
+        used_at TEXT,
+        revoked_at TEXT,
+        accepted_by_user_id TEXT REFERENCES users(id),
+        created_at TEXT NOT NULL
+      );
+
+      CREATE INDEX IF NOT EXISTS idx_invitations_token ON staff_invitations(token_hash);
+      CREATE INDEX IF NOT EXISTS idx_invitations_email ON staff_invitations(recipient_email);
+      CREATE INDEX IF NOT EXISTS idx_invitations_role ON staff_invitations(role_id);
+    `,
+  },
 ];
 
 export function runMigrations(db: DatabaseSync): void {
