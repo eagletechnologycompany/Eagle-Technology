@@ -160,6 +160,14 @@ export function Footer() {
           <p className="text-xs text-[var(--color-soft-sand)]/60">
             © {currentYear} {SITE_CONFIG.name}. All rights reserved.
           </p>
+          <div className="flex items-center gap-6 text-xs text-[var(--color-soft-sand)]/60">
+            <Link href="/terms" className="hover:text-[var(--color-brown-gold)] transition-colors">
+              Terms of Service
+            </Link>
+            <Link href="/privacy" className="hover:text-[var(--color-brown-gold)] transition-colors">
+              Privacy Policy
+            </Link>
+          </div>
           <p className="text-xs text-[var(--color-soft-sand)]/60">
             {SITE_CONFIG.origin} · {SITE_CONFIG.teamSizeLabel}
           </p>
