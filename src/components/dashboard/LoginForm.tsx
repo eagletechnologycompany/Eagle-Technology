@@ -30,7 +30,11 @@ export function LoginForm({ sessionExpired }: { sessionExpired: boolean }) {
         setLoading(false);
         return;
       }
-      router.push("/dashboard");
+      if (data.founder?.roleId === "client") {
+        router.push("/portal");
+      } else {
+        router.push("/dashboard");
+      }
       router.refresh();
     } catch {
       setError("Network error while attempting to sign in.");
@@ -49,13 +53,13 @@ export function LoginForm({ sessionExpired }: { sessionExpired: boolean }) {
           />
           <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-[var(--color-pale-gold)] px-3 py-1 text-[11px] font-semibold text-[var(--color-dark-brown)]">
             <Lock className="h-3 w-3 text-[var(--color-brown-gold)]" aria-hidden="true" />
-            Private Founder Operations Workspace
+            Private Customer &amp; Founder Platform
           </div>
           <h1 className="mt-3 text-2xl font-bold text-[var(--color-dark-brown)]">
-            Founder Sign In
+            Platform Sign In
           </h1>
           <p className="mt-1 text-xs text-[var(--color-muted-brown)]">
-            Authenticated internal workspace for the five Eagle Technology founding roles.
+            Secure access for Eagle Technology founders, registered customers, and developer platform participants.
           </p>
         </div>
 
@@ -95,7 +99,7 @@ export function LoginForm({ sessionExpired }: { sessionExpired: boolean }) {
               required
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="ceo, frontend, backend, design, or ai-automation"
+              placeholder="ceo, frontend, backend, design, ai-automation, or client"
               className="w-full rounded-lg border border-[var(--color-soft-sand)] bg-[var(--color-warm-off-white)] px-3.5 py-2.5 text-sm text-[var(--color-deep-brown)] focus:border-[var(--color-brown-gold)] focus:bg-white focus:outline-none"
             />
           </div>
@@ -115,7 +119,7 @@ export function LoginForm({ sessionExpired }: { sessionExpired: boolean }) {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter founder password"
+              placeholder="Enter your account password"
               className="w-full rounded-lg border border-[var(--color-soft-sand)] bg-[var(--color-warm-off-white)] px-3.5 py-2.5 text-sm text-[var(--color-deep-brown)] focus:border-[var(--color-brown-gold)] focus:bg-white focus:outline-none"
             />
           </div>

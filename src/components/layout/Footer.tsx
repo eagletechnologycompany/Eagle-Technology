@@ -18,6 +18,12 @@ const footerLinks = {
     { href: "/solutions#ai", label: "AI & Automation" },
     { href: "/solutions#digital", label: "Digital Transformation" },
   ],
+  platform: [
+    { href: "/login", label: "Platform Sign In" },
+    { href: "/portal", label: "Customer & Partner Portal" },
+    { href: "/portal/developer", label: "Developer Sandbox & SDK" },
+    { href: "/dashboard", label: "Founder Operations Workspace" },
+  ],
   connect: [
     { href: "/insights", label: "Insights" },
     { href: "/contact", label: "Contact Us" },
@@ -31,7 +37,7 @@ export function Footer() {
   return (
     <footer className="border-t border-[var(--color-dark-brown)] bg-[var(--color-deep-brown)] text-[var(--color-soft-sand)]">
       <div className="section-padding py-16">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           {/* Brand column */}
           <div>
             <Link href="/" className="inline-block mb-4" aria-label="Eagle Technology home">
@@ -76,6 +82,25 @@ export function Footer() {
             </h3>
             <ul className="space-y-3">
               {footerLinks.solutions.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-[var(--color-soft-sand)]/75 transition-colors hover:text-[var(--color-brown-gold)]"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Platform links */}
+          <div>
+            <h3 className="mb-4 text-xs font-semibold tracking-[0.18em] text-white uppercase">
+              Platform
+            </h3>
+            <ul className="space-y-3">
+              {footerLinks.platform.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}

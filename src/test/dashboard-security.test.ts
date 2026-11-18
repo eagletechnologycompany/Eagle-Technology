@@ -101,7 +101,18 @@ describe("Founder Dashboard authentication, RBAC, and document security", () => 
     expect(feAuth.founder.permissions).not.toContain("settings.manage");
     expect(feAuth.founder.permissions).not.toContain("audit.view");
     expect(feAuth.founder.permissions).not.toContain("project.archive");
-  });
+
+    // Authenticate Registered Customer / Client
+    const clientAuth = authenticateFounderCredentials("client", "EagleClient!2026");
+    expect(clientAuth.ok).toBe(true);
+    if (!clientAuth.ok) return;
+    expect(clientAuth.founder.roleId).toBe("client");
+    expect(clientAuth.founder.permissions).toContain("portal.view");
+    expect(clientAuth.founder.permissions).toContain("portal.deliverables");
+    expect(clientAuth.founder.permissions).toContain("developer.access");
+    expect(clientAuth.founder.permissions).not.toContain("settings.manage");
+    expect(clientAuth.founder.permissions).not.toContain("audit.view");
+  }, 25000);
 
   it("validates private file uploads and enforces document access levels", () => {
     useTempWorkspaceDb();

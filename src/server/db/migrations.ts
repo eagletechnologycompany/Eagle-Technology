@@ -295,6 +295,56 @@ const MIGRATIONS: Migration[] = [
       CREATE INDEX IF NOT EXISTS idx_audit_created ON audit_logs(created_at DESC);
     `,
   },
+  {
+    version: 2,
+    name: "client_portal_and_developer_platform",
+    sql: `
+      CREATE TABLE IF NOT EXISTS client_deliverables (
+        id TEXT PRIMARY KEY,
+        project_id TEXT REFERENCES projects(id) ON DELETE CASCADE,
+        title TEXT NOT NULL,
+        category TEXT NOT NULL,
+        summary TEXT NOT NULL,
+        status TEXT NOT NULL, -- pending_review, approved, revision_requested, in_progress, scheduled
+        review_notes TEXT NOT NULL DEFAULT '',
+        asset_url TEXT,
+        submitted_by TEXT REFERENCES users(id),
+        reviewed_at TEXT,
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL
+      );
+
+      CREATE TABLE IF NOT EXISTS client_requests (
+        id TEXT PRIMARY KEY,
+        client_user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        project_id TEXT REFERENCES projects(id),
+        title TEXT NOT NULL,
+        type TEXT NOT NULL, -- feature, change_request, bug, consultation, general
+        priority TEXT NOT NULL, -- low, medium, high, urgent
+        details TEXT NOT NULL,
+        status TEXT NOT NULL DEFAULT 'received', -- received, under_review, scheduled, in_progress, completed, declined
+        founder_response TEXT NOT NULL DEFAULT '',
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL
+      );
+
+      CREATE TABLE IF NOT EXISTS developer_sandbox_keys (
+        id TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        key_prefix TEXT NOT NULL,
+        key_hash TEXT NOT NULL,
+        label TEXT NOT NULL,
+        environment TEXT NOT NULL DEFAULT 'sandbox',
+        revoked_at TEXT,
+        last_used_at TEXT,
+        created_at TEXT NOT NULL
+      );
+
+      CREATE INDEX IF NOT EXISTS idx_client_deliv_proj ON client_deliverables(project_id);
+      CREATE INDEX IF NOT EXISTS idx_client_req_user ON client_requests(client_user_id);
+      CREATE INDEX IF NOT EXISTS idx_dev_keys_user ON developer_sandbox_keys(user_id);
+    `,
+  },
 ];
 
 export function runMigrations(db: DatabaseSync): void {

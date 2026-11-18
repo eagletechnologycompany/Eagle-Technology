@@ -2,11 +2,15 @@ import type { DatabaseSync } from "node:sqlite";
 import {
   INITIAL_COMPANY_FOCUS_AREAS,
   PERMISSIONS,
+  ROLE_DEFINITIONS,
   ROLE_LIST,
 } from "@/lib/dashboard-constants";
 import { hashPassword } from "@/server/auth/crypto";
 
 function getBootstrapPassword(roleId: string): string {
+  if (roleId === "client") {
+    return process.env.EAGLE_BOOTSTRAP_CLIENT_PASSWORD || "EagleClient!2026";
+  }
   const perRoleEnv = process.env[`EAGLE_BOOTSTRAP_${roleId.toUpperCase()}_PASSWORD`];
   if (perRoleEnv && perRoleEnv.length >= 8) return perRoleEnv;
   if (
@@ -309,5 +313,156 @@ export function seedDatabaseIfNeeded(db: DatabaseSync): void {
       db.exec("ROLLBACK;");
       throw err;
     }
+  }
+
+  // Ensure client permissions, role, demo customer account, and developer foundation exist
+  seedClientPortalIfNeeded(db, now);
+}
+
+function seedClientPortalIfNeeded(db: DatabaseSync, now: string): void {
+  // 1. Ensure any new permissions from PERMISSIONS exist
+  const insertPerm = db.prepare(
+    "INSERT OR IGNORE INTO permissions (id, description) VALUES (?, ?)"
+  );
+  for (const perm of PERMISSIONS) {
+    insertPerm.run(perm, `Permission to ${perm.replace(".", " ")}`);
+  }
+
+  // 2. Ensure client role exists in roles table
+  const clientRole = ROLE_DEFINITIONS.client;
+  db.prepare(
+    "INSERT OR IGNORE INTO roles (id, title, short_title, description, created_at) VALUES (?, ?, ?, ?, ?)"
+  ).run(
+    clientRole.id,
+    clientRole.title,
+    clientRole.shortTitle,
+    "Registered customer and project participant platform role",
+    now
+  );
+
+  for (const perm of clientRole.permissions) {
+    db.prepare(
+      "INSERT OR IGNORE INTO role_permissions (role_id, permission_id) VALUES (?, ?)"
+    ).run(clientRole.id, perm);
+  }
+
+  // 3. Ensure usr_client exists
+  const existingClient = db
+    .prepare("SELECT id FROM users WHERE id = 'usr_client'")
+    .get();
+
+  if (!existingClient) {
+    db.prepare(
+      "INSERT INTO users (id, username, role_id, display_label, password_hash, is_active, created_at, updated_at) VALUES (?, ?, ?, ?, ?, 1, ?, ?)"
+    ).run(
+      "usr_client",
+      clientRole.username,
+      clientRole.id,
+      clientRole.title,
+      hashPassword(getBootstrapPassword("client")),
+      now,
+      now
+    );
+
+    db.prepare(
+      "INSERT OR IGNORE INTO team_member_profiles (user_id, role_id, placeholder_name, responsibilities_json, capacity_note, updated_at) VALUES (?, ?, ?, ?, ?, ?)"
+    ).run(
+      "usr_client",
+      clientRole.id,
+      clientRole.placeholderLabel,
+      JSON.stringify(clientRole.responsibilities),
+      "Registered customer participant for active sprint delivery.",
+      now
+    );
+
+    // Seed starter client deliverables
+    const demoProject = db
+      .prepare("SELECT id FROM projects WHERE is_demo = 1 LIMIT 1")
+      .get() as { id: string } | undefined;
+    const projId = demoProject?.id ?? "proj_demo_1";
+
+    db.prepare(
+      `INSERT OR IGNORE INTO client_deliverables (id, project_id, title, category, summary, status, review_notes, asset_url, submitted_by, created_at, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    ).run(
+      "deliv_1",
+      projId,
+      "Design System & Interactive Prototype Specification",
+      "UI/UX Design",
+      "Component tokens, responsive layouts, color accessibility audit, and desktop/mobile user journeys ready for client validation.",
+      "pending_review",
+      "Ready for client review. Please verify the navigation taxonomy and brand color token alignment.",
+      "/brand/eagle-logo.svg",
+      "usr_design",
+      now,
+      now
+    );
+
+    db.prepare(
+      `INSERT OR IGNORE INTO client_deliverables (id, project_id, title, category, summary, status, review_notes, asset_url, submitted_by, reviewed_at, created_at, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    ).run(
+      "deliv_2",
+      projId,
+      "System Architecture & API Specification (OpenAPI 3.1)",
+      "Technical Architecture",
+      "Comprehensive endpoint contract, HMAC session authentication flow, and database schema documentation.",
+      "approved",
+      "Approved by client lead during Architecture Review Sprint 1.",
+      "/docs/OPERATIONS_SECURITY.md",
+      "usr_backend",
+      now,
+      now,
+      now
+    );
+
+    db.prepare(
+      `INSERT OR IGNORE INTO client_deliverables (id, project_id, title, category, summary, status, review_notes, asset_url, submitted_by, created_at, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    ).run(
+      "deliv_3",
+      projId,
+      "Database Schema & WAL Migration Pipeline",
+      "Backend & Data",
+      "19 relational tables with foreign-key constraints, append-only security audit log, and document storage abstraction.",
+      "in_progress",
+      "Under active development in Sprint 2.",
+      null,
+      "usr_backend",
+      now,
+      now
+    );
+
+    // Seed starter client request
+    db.prepare(
+      `INSERT OR IGNORE INTO client_requests (id, client_user_id, project_id, title, type, priority, details, status, founder_response, created_at, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    ).run(
+      "req_1",
+      "usr_client",
+      projId,
+      "Request for Webhook Event on Deliverable Status Change",
+      "feature",
+      "medium",
+      "We would like our internal team to receive an automated webhook payload whenever a deliverable moves to 'pending_review' or 'approved'.",
+      "under_review",
+      "Approved in principle. AI & Automation specialist will wire into Developer Sandbox in Sprint 3.",
+      now,
+      now
+    );
+
+    // Seed starter developer sandbox key
+    db.prepare(
+      `INSERT OR IGNORE INTO developer_sandbox_keys (id, user_id, key_prefix, key_hash, label, environment, created_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`
+    ).run(
+      "key_sandbox_1",
+      "usr_client",
+      "eag_test_9f2a",
+      "hash_mock_eag_test_9f2a71b80c",
+      "Alpha Integration Sandbox Key",
+      "sandbox",
+      now
+    );
   }
 }

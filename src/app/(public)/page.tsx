@@ -324,7 +324,113 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 7. Final CTA */}
+      {/* 7. Connected Ecosystem: What Happens After You Partner With Us */}
+      <section className="border-b border-[var(--color-soft-sand)] bg-[var(--color-warm-off-white)] py-20 md:py-24">
+        <div className="section-padding">
+          <SectionHeading
+            label="Digital Ecosystem"
+            title="What happens after you partner with Eagle"
+            description="Our relationship is not a static exchange of files. Every client gains access to the private Eagle Platform to track milestones, inspect deliverables, and integrate developer tools."
+          />
+
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <MotionReveal delay={0.05}>
+              <div className="flex h-full flex-col justify-between rounded-2xl border border-[var(--color-soft-sand)] bg-white p-6 shadow-xs">
+                <div>
+                  <span className="font-mono text-xs font-bold text-[var(--color-brown-gold)]">
+                    PHASE 1
+                  </span>
+                  <h3 className="mt-2 text-base font-bold text-[var(--color-dark-brown)]">
+                    Scoping &amp; Discovery
+                  </h3>
+                  <p className="mt-2 text-xs leading-relaxed text-[var(--color-muted-brown)]">
+                    Our founding team holds an in-depth alignment conversation to define your exact business challenge, target users, and deliverable constraints.
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-[var(--color-soft-sand)] text-[11px] font-semibold text-[var(--color-dark-brown)]">
+                  Founder direct consultation
+                </div>
+              </div>
+            </MotionReveal>
+
+            <MotionReveal delay={0.1}>
+              <div className="flex h-full flex-col justify-between rounded-2xl border border-[var(--color-soft-sand)] bg-white p-6 shadow-xs">
+                <div>
+                  <span className="font-mono text-xs font-bold text-[var(--color-brown-gold)]">
+                    PHASE 2
+                  </span>
+                  <h3 className="mt-2 text-base font-bold text-[var(--color-dark-brown)]">
+                    Platform Onboarding
+                  </h3>
+                  <p className="mt-2 text-xs leading-relaxed text-[var(--color-muted-brown)]">
+                    You receive secure access credentials to the private Customer Portal where active sprints, team leads, and project timelines are published.
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-[var(--color-soft-sand)] text-[11px] font-semibold text-[var(--color-dark-brown)]">
+                  Dedicated customer workspace
+                </div>
+              </div>
+            </MotionReveal>
+
+            <MotionReveal delay={0.15}>
+              <div className="flex h-full flex-col justify-between rounded-2xl border border-[var(--color-soft-sand)] bg-white p-6 shadow-xs">
+                <div>
+                  <span className="font-mono text-xs font-bold text-[var(--color-brown-gold)]">
+                    PHASE 3
+                  </span>
+                  <h3 className="mt-2 text-base font-bold text-[var(--color-dark-brown)]">
+                    Deliverable Sign-Off
+                  </h3>
+                  <p className="mt-2 text-xs leading-relaxed text-[var(--color-muted-brown)]">
+                    Review UI prototypes, architecture contracts, and code milestones directly. Approve deliverables or request revisions with full audit tracking.
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-[var(--color-soft-sand)] text-[11px] font-semibold text-[var(--color-dark-brown)]">
+                  Milestone-based acceptance
+                </div>
+              </div>
+            </MotionReveal>
+
+            <MotionReveal delay={0.2}>
+              <div className="flex h-full flex-col justify-between rounded-2xl border border-[var(--color-soft-sand)] bg-white p-6 shadow-xs">
+                <div>
+                  <span className="font-mono text-xs font-bold text-[var(--color-brown-gold)]">
+                    PHASE 4
+                  </span>
+                  <h3 className="mt-2 text-base font-bold text-[var(--color-dark-brown)]">
+                    Developer APIs &amp; Growth
+                  </h3>
+                  <p className="mt-2 text-xs leading-relaxed text-[var(--color-muted-brown)]">
+                    Leverage the Developer Sandbox, API keys, webhook simulators, and SDK documentation to connect your systems and scale your operations.
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-[var(--color-soft-sand)] text-[11px] font-semibold text-[var(--color-dark-brown)]">
+                  Eagle Platform SDK &amp; APIs
+                </div>
+              </div>
+            </MotionReveal>
+          </div>
+
+          <div className="mt-10 rounded-2xl border border-[var(--color-brown-gold)]/30 bg-white p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+            <div>
+              <span className="text-xs font-semibold uppercase tracking-wider text-[var(--color-brown-gold)]">
+                Already Partnered with Eagle?
+              </span>
+              <h3 className="text-lg font-bold text-[var(--color-dark-brown)] mt-1">
+                Access your Customer &amp; Partner Platform Portal
+              </h3>
+              <p className="text-xs text-[var(--color-muted-brown)] mt-1">
+                Sign in to review active sprint deliverables, submit change inquiries, or test API sandbox keys.
+              </p>
+            </div>
+            <Button href="/login" variant="secondary" size="md">
+              Sign In to Platform
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* 8. Final CTA */}
       <section className="bg-[var(--color-dark-brown)] py-20 text-white">
         <div className="section-padding flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
           <div className="max-w-2xl">

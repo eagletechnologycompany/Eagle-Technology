@@ -1,4 +1,4 @@
-export type RoleId = "ceo" | "frontend" | "backend" | "design" | "ai_automation";
+export type RoleId = "ceo" | "frontend" | "backend" | "design" | "ai_automation" | "client";
 
 export const PERMISSIONS = [
   "project.view",
@@ -21,6 +21,10 @@ export const PERMISSIONS = [
   "goal.edit",
   "audit.view",
   "settings.manage",
+  "portal.view",
+  "portal.deliverables",
+  "portal.requests",
+  "developer.access",
 ] as const;
 
 export type Permission = (typeof PERMISSIONS)[number];
@@ -141,7 +145,37 @@ export const ROLE_DEFINITIONS: Record<RoleId, RoleDefinition> = {
     ],
     permissions: [...CONTRIBUTOR_PERMISSIONS],
   },
+  client: {
+    id: "client",
+    title: "Registered Customer & Project Participant",
+    shortTitle: "Customer Portal",
+    username: "client",
+    placeholderLabel: "Client Account · Alpha Project Participant",
+    responsibilities: [
+      "Project requirements and milestone feedback",
+      "Deliverables review and sign-off",
+      "Change request submissions",
+      "Developer API and sandbox integration testing",
+    ],
+    permissions: [
+      "project.view",
+      "task.view",
+      "document.view",
+      "portal.view",
+      "portal.deliverables",
+      "portal.requests",
+      "developer.access",
+    ],
+  },
 };
+
+export const FOUNDER_ROLE_IDS: RoleId[] = [
+  "ceo",
+  "frontend",
+  "backend",
+  "design",
+  "ai_automation",
+];
 
 export const ROLE_LIST: RoleDefinition[] = Object.values(ROLE_DEFINITIONS);
 

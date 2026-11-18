@@ -198,10 +198,26 @@ export async function requireFounderPage(
   if (!founder) {
     redirect("/login?expired=1");
   }
+  if (founder.roleId === "client") {
+    redirect("/portal");
+  }
   if (requiredPermission && !founder.permissions.includes(requiredPermission)) {
     redirect("/unauthorized");
   }
   return founder;
+}
+
+export async function requirePortalPage(
+  requiredPermission?: Permission
+): Promise<AuthenticatedFounder> {
+  const user = await getCurrentFounder();
+  if (!user) {
+    redirect("/login?expired=1");
+  }
+  if (requiredPermission && !user.permissions.includes(requiredPermission)) {
+    redirect("/unauthorized");
+  }
+  return user;
 }
 
 export function revokeSession(sessionId: string, actorUserId: string, actorRole: string): void {

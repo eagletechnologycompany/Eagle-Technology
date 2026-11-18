@@ -14,6 +14,15 @@
   --color-muted-brown: #765B40;
   --color-pale-gold: #F4E7D6;
 
+  /* Typography tokens */
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "DM Sans", sans-serif;
+
+  /* Layout and elevation tokens */
+  --space-unit: 8px;
+  --border-color: rgba(75, 46, 15, 0.18);
+  --shadow-soft: 0 20px 60px rgba(75, 46, 15, 0.12);
+
   /* Semantic tokens */
   --background: var(--color-warm-off-white);
   --foreground: var(--color-deep-brown);
