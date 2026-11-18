@@ -10,6 +10,7 @@ import {
   Cpu,
   ShieldAlert,
 } from "lucide-react";
+import { ArchitectureViewer } from "@/components/home/ArchitectureViewer";
 
 const CODE_EXAMPLES = {
   typescript: {
@@ -78,27 +79,27 @@ async def process_project_scope(payload: dict):
 const PIPELINE_STEPS = [
   {
     id: 1,
-    title: "Data & Scope Ingestion",
-    detail: "Validated request schema & cryptographic signature check",
-    latency: "12ms",
+    title: "Ingest",
+    detail: "Accept a structured project brief in the sandbox contract",
+    latency: "preview",
   },
   {
     id: 2,
-    title: "AI Cognitive Analysis",
-    detail: "Requirement parsing, complexity tiering & risk review",
-    latency: "185ms",
+    title: "Analyze",
+    detail: "Classify scope before any automated recommendation",
+    latency: "preview",
   },
   {
     id: 3,
-    title: "Database Sync & Storage",
-    detail: "Relational write in node:sqlite with WAL-mode concurrency",
-    latency: "4ms",
+    title: "Transform",
+    detail: "Turn the brief into milestone-ready work packages",
+    latency: "preview",
   },
   {
     id: 4,
-    title: "Real-time Event Dispatch",
-    detail: "Signed HMAC webhook payload sent to client endpoints",
-    latency: "42ms",
+    title: "Deploy",
+    detail: "Dispatch a mock project.milestone_ready event",
+    latency: "preview",
   },
 ];
 
@@ -325,6 +326,8 @@ export function TechPlayground() {
           </div>
         </div>
       </div>
+
+      <ArchitectureViewer />
     </div>
   );
 }

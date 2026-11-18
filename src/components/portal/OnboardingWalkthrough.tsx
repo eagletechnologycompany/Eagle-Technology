@@ -16,9 +16,13 @@ import {
 
 interface OnboardingWalkthroughProps {
   userDisplayLabel: string;
+  organizationName?: string | null;
 }
 
-export function OnboardingWalkthrough({ userDisplayLabel }: OnboardingWalkthroughProps) {
+export function OnboardingWalkthrough({
+  userDisplayLabel,
+  organizationName,
+}: OnboardingWalkthroughProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [manualOpen, setManualOpen] = useState(false);
@@ -113,10 +117,10 @@ export function OnboardingWalkthrough({ userDisplayLabel }: OnboardingWalkthroug
             </div>
 
             <h2 className="mt-2 text-xl font-bold tracking-tight text-[var(--color-dark-brown)] md:text-2xl">
-              Welcome, {userDisplayLabel}
+              Welcome{organizationName ? `, ${organizationName}` : ""}
             </h2>
-            <p className="mt-1 text-xs text-[var(--color-muted-brown)] leading-relaxed">
-              Here is how to get the most value out of your connected Eagle Technology workspace.
+            <p className="mt-1 text-xs leading-relaxed text-[var(--color-muted-brown)]">
+              {userDisplayLabel}. This walkthrough covers deliverable review, scope requests, and sandbox keys.
             </p>
 
             {/* Step Card */}

@@ -1,11 +1,10 @@
 import React from "react";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, Layers, ShieldCheck, Users } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { MotionReveal } from "@/components/ui/MotionReveal";
 import { SolutionIcon } from "@/components/ui/SolutionIcon";
-import { SITE_CONFIG } from "@/data/site";
 import {
   COMPANY_FOUNDATION,
   VALUE_PROPOSITION,
@@ -13,148 +12,14 @@ import {
 } from "@/data/company";
 import { SOLUTION_AREAS } from "@/data/solutions";
 import { WORK_DEMONSTRATIONS } from "@/data/work";
-import { EagleEyeRadar } from "@/components/home/EagleEyeRadar";
+import { QuietHero } from "@/components/home/QuietHero";
 import { TechPlayground } from "@/components/home/TechPlayground";
 import { ProjectEstimator } from "@/components/home/ProjectEstimator";
 
 export default function HomePage() {
   return (
     <>
-      {/* 1. Hero Section — Distinctive "Quiet Wow" Architectural Composition */}
-      <section className="relative overflow-hidden border-b border-[var(--color-soft-sand)] bg-[var(--color-warm-off-white)] py-20 md:py-28 lg:py-32">
-        {/* Subtle Architectural Linework & Grid Background */}
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.035]"
-          style={{
-            backgroundImage: `linear-gradient(to right, #4B2E0F 1px, transparent 1px), linear-gradient(to bottom, #4B2E0F 1px, transparent 1px)`,
-            backgroundSize: "48px 48px",
-          }}
-          aria-hidden="true"
-        />
-
-        {/* Ambient Warm Glow */}
-        <div
-          className="pointer-events-none absolute -top-40 right-0 h-96 w-96 rounded-full bg-[var(--color-brown-gold)]/10 blur-3xl"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute -bottom-40 left-10 h-96 w-96 rounded-full bg-[var(--color-dark-brown)]/5 blur-3xl"
-          aria-hidden="true"
-        />
-
-        <div className="section-padding relative z-10 grid grid-cols-1 items-center gap-14 lg:grid-cols-12">
-          <div className="lg:col-span-7">
-            {/* Origin & Readiness Badge */}
-            <div className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-[var(--color-soft-sand)] bg-white/90 px-4 py-1.5 text-xs font-semibold tracking-wide text-[var(--color-dark-brown)] shadow-xs backdrop-blur-xs">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--color-brown-gold)] opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--color-brown-gold)]" />
-              </span>
-              <span>{SITE_CONFIG.origin}</span>
-              <span className="text-[var(--color-soft-sand)]">|</span>
-              <span className="text-[var(--color-muted-brown)]">{SITE_CONFIG.teamSizeLabel}</span>
-            </div>
-
-            <h1 className="text-4xl font-bold tracking-tight text-[var(--color-dark-brown)] sm:text-5xl lg:text-6xl lg:leading-[1.12]">
-              {SITE_CONFIG.slogan}
-            </h1>
-
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-[var(--color-muted-brown)] md:text-xl">
-              {SITE_CONFIG.heroSupportingMessage}
-            </p>
-
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <Button href="/contact" size="lg" className="group gap-2 shadow-md hover:shadow-lg transition-all duration-200">
-                Start a Project
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-              </Button>
-              <Button href="/solutions" variant="outline" size="lg" className="hover:border-[var(--color-brown-gold)]">
-                Explore Our Solutions
-              </Button>
-            </div>
-
-            <div className="mt-12 grid grid-cols-1 gap-6 border-t border-[var(--color-soft-sand)] pt-8 sm:grid-cols-3">
-              <div className="relative pl-3 border-l-2 border-[var(--color-brown-gold)]">
-                <p className="text-xs font-semibold tracking-wider text-[var(--color-brown-gold)] uppercase">
-                  Initial Market
-                </p>
-                <p className="mt-1 text-sm font-semibold text-[var(--color-dark-brown)]">
-                  Ethiopia
-                </p>
-                <p className="text-[11px] text-[var(--color-muted-brown)]">Local needs, localized value</p>
-              </div>
-              <div className="relative pl-3 border-l-2 border-[var(--color-brown-gold)]/60">
-                <p className="text-xs font-semibold tracking-wider text-[var(--color-brown-gold)] uppercase">
-                  Long-Term Ambition
-                </p>
-                <p className="mt-1 text-sm font-semibold text-[var(--color-dark-brown)]">
-                  Africa &amp; Global Markets
-                </p>
-                <p className="text-[11px] text-[var(--color-muted-brown)]">Scalable cloud &amp; platforms</p>
-              </div>
-              <div className="relative pl-3 border-l-2 border-[var(--color-brown-gold)]/30">
-                <p className="text-xs font-semibold tracking-wider text-[var(--color-brown-gold)] uppercase">
-                  Founding Structure
-                </p>
-                <p className="mt-1 text-sm font-semibold text-[var(--color-dark-brown)]">
-                  5 Core Founding Roles
-                </p>
-                <p className="text-[11px] text-[var(--color-muted-brown)]">End-to-end technical delivery</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Brand Emblem Showcase Card with Geometric Linework */}
-          <div className="lg:col-span-5">
-            <MotionReveal>
-              <div className="relative rounded-2xl border border-[var(--color-brown-gold)]/30 bg-gradient-to-b from-[var(--color-deep-brown)] to-[#180e05] p-8 text-white shadow-2xl sm:p-10">
-                {/* Decorative Linework Accents */}
-                <div className="absolute top-3 left-3 h-3 w-3 border-t border-l border-[var(--color-brown-gold)]/50" />
-                <div className="absolute top-3 right-3 h-3 w-3 border-t border-r border-[var(--color-brown-gold)]/50" />
-                <div className="absolute bottom-3 left-3 h-3 w-3 border-b border-l border-[var(--color-brown-gold)]/50" />
-                <div className="absolute bottom-3 right-3 h-3 w-3 border-b border-r border-[var(--color-brown-gold)]/50" />
-
-                <div className="border-b border-[var(--color-muted-brown)]/30 pb-6 text-center">
-                  <EagleEyeRadar />
-                  <p className="mt-3 text-xs font-semibold tracking-[0.2em] text-[var(--color-brown-gold)] uppercase">
-                    Official Brand Identity
-                  </p>
-                  <p className="mt-1.5 max-w-xs mx-auto text-xs text-[var(--color-soft-sand)]/80">
-                    Vision, practical engineering, and human collaboration built on
-                    substance rather than appearance.
-                  </p>
-                </div>
-
-                <div className="mt-6 space-y-3.5 text-xs text-[var(--color-soft-sand)]/85">
-                  <div className="flex items-center justify-between rounded-lg bg-white/5 px-3 py-2">
-                    <span className="flex items-center gap-2">
-                      <Users className="h-4 w-4 text-[var(--color-brown-gold)]" aria-hidden="true" />
-                      Founding Team
-                    </span>
-                    <span className="font-semibold text-white">5 Members</span>
-                  </div>
-                  <div className="flex items-center justify-between rounded-lg bg-white/5 px-3 py-2">
-                    <span className="flex items-center gap-2">
-                      <Layers className="h-4 w-4 text-[var(--color-brown-gold)]" aria-hidden="true" />
-                      Core Focus
-                    </span>
-                    <span className="font-semibold text-white">Software &amp; Digital Solutions</span>
-                  </div>
-                  <div className="flex items-center justify-between rounded-lg bg-white/5 px-3 py-2">
-                    <span className="flex items-center gap-2">
-                      <ShieldCheck className="h-4 w-4 text-[var(--color-brown-gold)]" aria-hidden="true" />
-                      Stage
-                    </span>
-                    <span className="font-semibold text-[var(--color-brown-gold)]">
-                      Foundation &amp; Launch Readiness
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </MotionReveal>
-          </div>
-        </div>
-      </section>
+      <QuietHero />
 
       {/* 2. Short Company Introduction */}
       <section className="border-b border-[var(--color-soft-sand)] bg-white py-20 md:py-24">
@@ -251,7 +116,7 @@ export default function HomePage() {
       </section>
 
       {/* 4. Interactive Developer Platform & Engine Showcase */}
-      <section className="border-b border-[var(--color-dark-brown)] bg-[var(--color-deep-brown)] py-20 md:py-28">
+      <section id="technology-showcase" className="scroll-mt-24 border-b border-[var(--color-dark-brown)] bg-[var(--color-deep-brown)] py-20 md:py-28">
         <div className="section-padding">
           <TechPlayground />
         </div>

@@ -12,8 +12,15 @@ import { requirePortalPage } from "@/server/auth/session";
 import { getDb } from "@/server/db/client";
 import { OnboardingWalkthrough } from "@/components/portal/OnboardingWalkthrough";
 
+function organizationFromLabel(label: string): string | null {
+  const match = label.match(/\(([^)]+)\)\s*$/);
+  const organization = match?.[1]?.trim();
+  return organization || null;
+}
+
 export default async function PortalOverviewPage() {
   const user = await requirePortalPage();
+  const organization = organizationFromLabel(user.displayLabel);
   const db = getDb();
 
   // Fetch active project
@@ -37,8 +44,32 @@ export default async function PortalOverviewPage() {
         start_date: string | null;
         target_date: string | null;
         lead_name: string;
+        is_demo: number;
       }
     | undefined;
+
+  const milestones = project
+    ? (db
+        .prepare(
+          `SELECT title, status, due_date
+           FROM milestones
+           WHERE project_id = ?
+           ORDER BY due_date ASC`
+        )
+        .all(project.id) as Array<{ title: string; status: string; due_date: string | null }>)
+    : [];
+
+  const completedMilestones = milestones.filter((milestone) => {
+    const status = milestone.status.toLowerCase();
+    return status === "done" || status === "completed" || status === "complete";
+  }).length;
+  const milestoneTotal = milestones.length;
+  const completionPercent =
+    milestoneTotal === 0 ? 0 : Math.round((completedMilestones / milestoneTotal) * 100);
+  const nextMilestone = milestones.find((milestone) => {
+    const status = milestone.status.toLowerCase();
+    return status !== "done" && status !== "completed" && status !== "complete";
+  });
 
   // Fetch deliverables count
   const deliverables = db
@@ -80,11 +111,17 @@ export default async function PortalOverviewPage() {
                 <span className="h-2 w-2 rounded-full bg-[var(--color-brown-gold)] animate-pulse" />
                 Active Client Engagement
               </div>
-              <OnboardingWalkthrough userDisplayLabel={user.displayLabel} />
+              <OnboardingWalkthrough
+                userDisplayLabel={user.displayLabel}
+                organizationName={organization}
+              />
             </div>
             <h1 className="mt-2 text-2xl font-bold tracking-tight text-[var(--color-dark-brown)] sm:text-3xl">
-              Welcome, {user.displayLabel}
+              Welcome{organization ? `, ${organization}` : ""}
             </h1>
+            <p className="mt-1 text-sm font-medium text-[var(--color-dark-brown)]">
+              {user.displayLabel}
+            </p>
             <p className="mt-1 text-sm text-[var(--color-muted-brown)]">
               Track your active Eagle Technology project, review engineering deliverables, submit scope requests, and test integration tools.
             </p>
@@ -139,18 +176,25 @@ export default async function PortalOverviewPage() {
           <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4">
             <div className="rounded-xl border border-[var(--color-soft-sand)] bg-[var(--color-warm-off-white)] p-4">
               <span className="text-xs font-semibold text-[var(--color-muted-brown)]">
-                Phase Completion
+                Milestone completion
               </span>
               <div className="mt-2 flex items-baseline gap-2">
-                <span className="text-2xl font-bold text-[var(--color-dark-brown)]">72%</span>
-                <span className="text-xs text-[var(--color-brown-gold)] font-medium">On Schedule</span>
+                <span className="text-2xl font-bold text-[var(--color-dark-brown)]">
+                  {completedMilestones}/{milestoneTotal || 0}
+                </span>
+                <span className="text-xs font-medium text-[var(--color-brown-gold)]">
+                  {project.is_demo ? "Demo record" : project.status}
+                </span>
               </div>
               <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-stone-200">
                 <div
                   className="h-full rounded-full bg-[var(--color-brown-gold)]"
-                  style={{ width: "72%" }}
+                  style={{ width: `${completionPercent}%` }}
                 />
               </div>
+              <p className="mt-2 text-[11px] text-[var(--color-muted-brown)]">
+                Counted from recorded milestones. No estimated percentage is shown.
+              </p>
             </div>
 
             <div className="rounded-xl border border-[var(--color-soft-sand)] bg-[var(--color-warm-off-white)] p-4">
@@ -171,10 +215,12 @@ export default async function PortalOverviewPage() {
               </span>
               <div className="mt-2 flex items-center gap-1.5 text-sm font-bold text-[var(--color-dark-brown)]">
                 <Calendar className="h-4 w-4 text-[var(--color-brown-gold)]" />
-                Sprint 2 Demo
+                {nextMilestone?.title ?? "To be confirmed"}
               </div>
               <p className="text-xs text-[var(--color-muted-brown)]">
-                Target: {project.target_date || "To be confirmed"}
+                {nextMilestone
+                  ? `${nextMilestone.status} · ${nextMilestone.due_date || "Date to be confirmed"}`
+                  : `Target: ${project.target_date || "To be confirmed"}`}
               </p>
             </div>
 

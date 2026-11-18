@@ -92,7 +92,7 @@ export function Header() {
           <button
             type="button"
             onClick={() => setMobileOpen((prev) => !prev)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-[var(--color-soft-sand)] text-[var(--color-dark-brown)] transition-colors hover:bg-[var(--color-pale-gold)] lg:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-[var(--color-soft-sand)] text-[var(--color-dark-brown)] transition-colors hover:bg-[var(--color-pale-gold)] lg:hidden"
             aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={mobileOpen}
           >
@@ -118,7 +118,7 @@ export function Header() {
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
                   aria-current={isActive ? "page" : undefined}
-                  className={`rounded-lg px-4 py-3 text-sm font-medium transition-colors ${
+                  className={`min-h-11 rounded-lg px-4 py-3 text-sm font-medium transition-colors ${
                     isActive
                       ? "bg-[var(--color-pale-gold)] font-semibold text-[var(--color-dark-brown)]"
                       : "text-[var(--color-muted-brown)] hover:bg-[var(--color-warm-off-white)] hover:text-[var(--color-dark-brown)]"
@@ -132,14 +132,14 @@ export function Header() {
               <Link
                 href="/login"
                 onClick={() => setMobileOpen(false)}
-                className="rounded-lg border border-[var(--color-soft-sand)] py-2 text-center text-xs font-semibold text-[var(--color-dark-brown)] hover:bg-[var(--color-pale-gold)]"
+                className="inline-flex min-h-11 items-center justify-center rounded-lg border border-[var(--color-soft-sand)] py-2 text-center text-xs font-semibold text-[var(--color-dark-brown)] hover:bg-[var(--color-pale-gold)]"
               >
                 Sign In
               </Link>
               <Link
                 href="/signup"
                 onClick={() => setMobileOpen(false)}
-                className="rounded-lg border border-[var(--color-brown-gold)]/40 bg-[var(--color-pale-gold)] py-2 text-center text-xs font-semibold text-[var(--color-dark-brown)]"
+                className="inline-flex min-h-11 items-center justify-center rounded-lg border border-[var(--color-brown-gold)]/40 bg-[var(--color-pale-gold)] py-2 text-center text-xs font-semibold text-[var(--color-dark-brown)]"
               >
                 Sign Up
               </Link>

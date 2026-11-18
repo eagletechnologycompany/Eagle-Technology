@@ -51,8 +51,8 @@ export function SignUpForm() {
   const strength = getPasswordStrength(password);
 
   function handleQuickDemoFill() {
-    setFullName("Abebe Kebede");
-    setOrganization("Horn Horizon Technologies");
+    setFullName("Sample Reviewer");
+    setOrganization("Sample Organization");
     setEmail(`partner.${Date.now().toString().slice(-4)}@hornhorizon.et`);
     setPassword("EagleCustomer!2026");
     setUseCase("Commercial Client");

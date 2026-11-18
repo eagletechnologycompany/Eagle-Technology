@@ -13,6 +13,16 @@ export function LoginForm({ sessionExpired }: { sessionExpired: boolean }) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const normalizedName = username.trim().toLowerCase();
+  const founderRoles = ["ceo", "frontend", "backend", "design", "ai-automation"];
+  const destination = !normalizedName
+    ? null
+    : normalizedName === "client" || normalizedName.includes("@")
+      ? "client"
+      : founderRoles.includes(normalizedName)
+        ? "founder"
+        : "unknown";
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
@@ -68,6 +78,19 @@ export function LoginForm({ sessionExpired }: { sessionExpired: boolean }) {
               Create Account
             </Link>
           </div>
+
+          {destination && (
+            <p
+              className="mt-3 inline-flex items-center rounded-full border border-[var(--color-brown-gold)]/40 bg-[var(--color-pale-gold)] px-3 py-1 text-[11px] font-semibold text-[var(--color-dark-brown)]"
+              role="status"
+            >
+              {destination === "client"
+                ? "Client Portal"
+                : destination === "founder"
+                  ? "Founder Workspace"
+                  : "Unrecognized account — check the username"}
+            </p>
+          )}
 
           <h1 className="mt-4 text-2xl font-bold text-[var(--color-dark-brown)]">
             Platform Sign In
@@ -161,7 +184,7 @@ export function LoginForm({ sessionExpired }: { sessionExpired: boolean }) {
               }}
               className="rounded-md border border-[var(--color-soft-sand)] bg-[var(--color-warm-off-white)] px-2 py-1.5 text-left text-[11px] font-semibold text-[var(--color-dark-brown)] hover:bg-[var(--color-pale-gold)] transition-colors"
             >
-              👑 Founder &amp; CEO
+              Founder &amp; CEO
             </button>
             <button
               type="button"
@@ -171,7 +194,7 @@ export function LoginForm({ sessionExpired }: { sessionExpired: boolean }) {
               }}
               className="rounded-md border border-[var(--color-soft-sand)] bg-[var(--color-warm-off-white)] px-2 py-1.5 text-left text-[11px] font-semibold text-[var(--color-dark-brown)] hover:bg-[var(--color-pale-gold)] transition-colors"
             >
-              💼 Client (Portal)
+              Client Portal
             </button>
             <button
               type="button"
@@ -181,7 +204,7 @@ export function LoginForm({ sessionExpired }: { sessionExpired: boolean }) {
               }}
               className="rounded-md border border-[var(--color-soft-sand)] bg-[var(--color-warm-off-white)] px-2 py-1.5 text-left text-[11px] font-semibold text-[var(--color-dark-brown)] hover:bg-[var(--color-pale-gold)] transition-colors"
             >
-              ⚙️ Backend Dev
+              Backend Developer
             </button>
             <button
               type="button"
@@ -191,7 +214,7 @@ export function LoginForm({ sessionExpired }: { sessionExpired: boolean }) {
               }}
               className="rounded-md border border-[var(--color-soft-sand)] bg-[var(--color-warm-off-white)] px-2 py-1.5 text-left text-[11px] font-semibold text-[var(--color-dark-brown)] hover:bg-[var(--color-pale-gold)] transition-colors"
             >
-              🤖 AI Specialist
+              AI &amp; Automation
             </button>
           </div>
         </div>

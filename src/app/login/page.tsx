@@ -4,7 +4,7 @@ import { getCurrentFounder } from "@/server/auth/session";
 import { LoginForm } from "@/components/dashboard/LoginForm";
 
 export const metadata: Metadata = {
-  title: "Founder Sign In — Eagle Technology",
+  title: "Sign In — Eagle Technology",
   robots: { index: false, follow: false },
 };
 
@@ -15,7 +15,7 @@ export default async function LoginPage({
 }) {
   const founder = await getCurrentFounder();
   if (founder) {
-    redirect("/dashboard");
+    redirect(founder.roleId === "client" ? "/portal" : "/dashboard");
   }
 
   const params = await searchParams;

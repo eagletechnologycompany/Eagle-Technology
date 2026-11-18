@@ -58,7 +58,7 @@ export function PortalNavLinks() {
         <button
           type="button"
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="inline-flex items-center justify-center rounded-lg border border-[var(--color-soft-sand)] bg-white p-2 text-[var(--color-dark-brown)] hover:bg-[var(--color-warm-off-white)]"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-[var(--color-soft-sand)] bg-white text-[var(--color-dark-brown)] hover:bg-[var(--color-warm-off-white)]"
           aria-expanded={mobileOpen}
           aria-label="Toggle Portal Menu"
         >
@@ -82,7 +82,7 @@ export function PortalNavLinks() {
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
                   aria-current={isActive ? "page" : undefined}
-                  className={`flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-semibold transition-colors ${
+                  className={`flex min-h-11 items-center gap-2.5 rounded-lg px-3 py-3 text-sm font-semibold transition-colors ${
                     isActive
                       ? "bg-[var(--color-pale-gold)] text-[var(--color-dark-brown)]"
                       : "text-[var(--color-muted-brown)] hover:bg-[var(--color-warm-off-white)] hover:text-[var(--color-dark-brown)]"
