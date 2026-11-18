@@ -34,6 +34,7 @@ In accordance with Section 2 of the Eagle Technology Platform Specification:
 | **CR-09** | **Domain & DNS Setup** | Infrastructure, Email | Local and staging environment active. Production domain pending final registrar assignment. | `[Integration pending]` | CEO to secure primary domain (e.g., `eagletechnology.et` / `eagletechnology.com`) and configure DKIM, SPF, and DMARC DNS records. |
 | **CR-10** | **Terms of Service & Privacy Policy** | Public Pages (`/terms`, `/privacy`), Footer | Live dedicated legal and privacy disclosures aligned with Ethiopian electronic commerce laws and international privacy baselines, explicitly marked with review status notices. | `[Founder approval required]` | Founders to submit draft terms for review by an Ethiopian legal specialist prior to high-volume commercial launch. |
 | **CR-11** | **Customer Self-Registration & Onboarding** | Public Sign-Up (`/signup`), Portal (`/portal`) | Split-screen registration engine with NIST password strength analysis, instant cryptographic scrypt hashing, and 3-step interactive onboarding modal. | `[Coming soon]` | Configure transactional email verification and organization verification workflows upon domain registration. |
+| **CR-12** | **Confidential Staff Provisioning** | Operations Backend (`/api/auth/**`), SQLite Migrations | Public registration of executive roles (CEO, developers, designers) strictly disabled. Staff accounts provisioned exclusively via single-use, revocable, cryptographically hashed invitation tokens. | `[To be confirmed]` | Founders to configure corporate SMTP relay to deliver cryptographic invitation emails securely. |
 
 ---
 
@@ -46,11 +47,11 @@ In accordance with Section 2 of the Eagle Technology Platform Specification:
   - Accessible only to authenticated client/partner roles.
   - Provides active project milestone tracking, deliverable review/acceptance, structured change request submission, and Developer Sandbox preview.
 - **Private Founder Operations Dashboard (`/dashboard/**`)**:
-  - Accessible only to the 5 authenticated founding roles (`ceo`, `frontend`, `backend`, `design`, `ai-automation`).
+  - Accessible only to the 5 authenticated founding roles (`ceo`, `frontend`, `backend`, `design`, `ai_automation`).
   - Isolated behind HTTP-only HMAC-signed session cookies and scrypt cryptographic validation.
 
 ---
 
 ## 4. Verification Sign-Off
 
-This register is maintained under version control in the workspace root. Any modification to public claims or service definitions must be logged here and approved by the founding team.
+This register is maintained under version control in both repository root (`CONTENT-REVIEW.md`) and documentation root (`docs/CONTENT-REVIEW.md`). Any modification to public claims or service definitions must be logged here and approved by the founding team.
