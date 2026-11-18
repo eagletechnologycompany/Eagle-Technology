@@ -12,6 +12,9 @@ import {
   Sparkles,
   ArrowRight,
   ShieldCheck,
+  Eye,
+  EyeOff,
+  Check,
 } from "lucide-react";
 
 export function SignUpForm() {
@@ -20,6 +23,9 @@ export function SignUpForm() {
   const [organization, setOrganization] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [useCase, setUseCase] = useState("Commercial Client");
   const [agreedTerms, setAgreedTerms] = useState(false);
   const [error, setError] = useState("");
@@ -49,12 +55,15 @@ export function SignUpForm() {
   }
 
   const strength = getPasswordStrength(password);
+  const passwordsMatch = confirmPassword.length > 0 && password === confirmPassword;
+  const passwordsMismatch = confirmPassword.length > 0 && password !== confirmPassword;
 
   function handleQuickDemoFill() {
     setFullName("Sample Reviewer");
     setOrganization("Sample Organization");
     setEmail(`partner.${Date.now().toString().slice(-4)}@hornhorizon.et`);
     setPassword("EagleCustomer!2026");
+    setConfirmPassword("EagleCustomer!2026");
     setUseCase("Commercial Client");
     setAgreedTerms(true);
   }
@@ -70,6 +79,11 @@ export function SignUpForm() {
 
     if (password.length < 8) {
       setError("Password must be at least 8 characters long.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match. Please verify your password confirmation.");
       return;
     }
 
@@ -212,15 +226,16 @@ export function SignUpForm() {
               id="useCase"
               value={useCase}
               onChange={(e) => setUseCase(e.target.value)}
-              className="w-full rounded-lg border border-[var(--color-soft-sand)] bg-[var(--color-warm-off-white)] px-3.5 py-2.5 text-sm text-[var(--color-deep-brown)] focus:border-[var(--color-brown-gold)] focus:bg-white focus:outline-none"
+              className="w-full rounded-lg border border-[var(--color-soft-sand)] bg-[var(--color-warm-off-white)] px-3 py-2.5 text-sm text-[var(--color-deep-brown)] focus:border-[var(--color-brown-gold)] focus:bg-white focus:outline-none"
             >
               <option value="Commercial Client">Commercial Client (Custom Software / Web Platform)</option>
-              <option value="Technology Partner">Strategic Technology Partner</option>
-              <option value="Developer Sandbox">Developer Sandbox &amp; SDK Evaluation</option>
-              <option value="AI & Automation Inquiries">AI &amp; Automation Discovery</option>
+              <option value="AI & Automation Integration">AI &amp; Automation Integration</option>
+              <option value="Developer Platform Sandbox">Developer Platform &amp; API Integration</option>
+              <option value="Partner Collaboration">Strategic Partner / Entrepreneur</option>
             </select>
           </div>
 
+          {/* Password Input with Show/Hide Toggle */}
           <div>
             <label
               htmlFor="password"
@@ -232,14 +247,22 @@ export function SignUpForm() {
               <Lock className="absolute top-3 left-3 h-4 w-4 text-[var(--color-muted-brown)]" />
               <input
                 id="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 autoComplete="new-password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Minimum 8 characters"
-                className="w-full rounded-lg border border-[var(--color-soft-sand)] bg-[var(--color-warm-off-white)] py-2.5 pr-3.5 pl-9 text-sm text-[var(--color-deep-brown)] focus:border-[var(--color-brown-gold)] focus:bg-white focus:outline-none"
+                className="w-full rounded-lg border border-[var(--color-soft-sand)] bg-[var(--color-warm-off-white)] py-2.5 pr-10 pl-9 text-sm text-[var(--color-deep-brown)] focus:border-[var(--color-brown-gold)] focus:bg-white focus:outline-none"
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute top-2.5 right-3 text-[var(--color-muted-brown)] hover:text-[var(--color-dark-brown)]"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
             </div>
 
             {/* Password Strength Indicator */}
@@ -255,6 +278,59 @@ export function SignUpForm() {
                   <span>Strength: {strength.label}</span>
                   <span>Min 8 characters</span>
                 </div>
+              </div>
+            )}
+          </div>
+
+          {/* Confirm Password Input with Show/Hide Toggle */}
+          <div>
+            <label
+              htmlFor="confirmPassword"
+              className="mb-1 block text-xs font-semibold text-[var(--color-dark-brown)] uppercase"
+            >
+              Confirm Password
+            </label>
+            <div className="relative">
+              <Lock className="absolute top-3 left-3 h-4 w-4 text-[var(--color-muted-brown)]" />
+              <input
+                id="confirmPassword"
+                type={showConfirmPassword ? "text" : "password"}
+                autoComplete="new-password"
+                required
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Re-enter your password"
+                className={`w-full rounded-lg border py-2.5 pr-10 pl-9 text-sm text-[var(--color-deep-brown)] focus:bg-white focus:outline-none ${
+                  passwordsMismatch
+                    ? "border-red-400 bg-red-50/50 focus:border-red-500"
+                    : passwordsMatch
+                      ? "border-emerald-500 bg-emerald-50/30 focus:border-emerald-600"
+                      : "border-[var(--color-soft-sand)] bg-[var(--color-warm-off-white)] focus:border-[var(--color-brown-gold)]"
+                }`}
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute top-2.5 right-3 text-[var(--color-muted-brown)] hover:text-[var(--color-dark-brown)]"
+                aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
+              >
+                {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            </div>
+
+            {/* Match Indicator */}
+            {confirmPassword.length > 0 && (
+              <div className="mt-1 flex items-center gap-1.5 text-[11px]">
+                {passwordsMatch ? (
+                  <span className="inline-flex items-center gap-1 text-emerald-700 font-medium">
+                    <Check className="h-3.5 w-3.5" />
+                    Passwords match
+                  </span>
+                ) : (
+                  <span className="text-red-600 font-medium">
+                    Passwords do not match
+                  </span>
+                )}
               </div>
             )}
           </div>
