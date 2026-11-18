@@ -17,15 +17,15 @@ export default function SignUpPage() {
     <main className="min-h-screen bg-[var(--color-warm-off-white)] py-12 md:py-20">
       <div className="section-padding mx-auto max-w-7xl">
         {/* Navigation Bar */}
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-xs font-semibold text-[var(--color-brown-gold)] hover:underline"
+            className="inline-flex items-center gap-2 text-xs font-semibold text-[var(--color-brown-gold)] hover:underline whitespace-nowrap shrink-0"
           >
-            <ArrowLeft className="h-3.5 w-3.5" />
-            Back to Public Website
+            <ArrowLeft className="h-3.5 w-3.5 shrink-0" />
+            <span>Back to Public Website</span>
           </Link>
-          <div className="text-xs text-[var(--color-muted-brown)]">
+          <div className="text-xs text-[var(--color-muted-brown)] whitespace-nowrap shrink-0">
             Already have an account?{" "}
             <Link href="/login" className="font-semibold text-[var(--color-brown-gold)] hover:underline">
               Sign In

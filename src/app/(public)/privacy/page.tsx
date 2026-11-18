@@ -15,17 +15,17 @@ export default function PrivacyPage() {
     <div className="py-16 md:py-24">
       <div className="section-padding max-w-4xl mx-auto">
         {/* Navigation & Status Header */}
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-xs font-semibold text-[var(--color-brown-gold)] hover:underline"
+            className="inline-flex items-center gap-2 text-xs font-semibold text-[var(--color-brown-gold)] hover:underline whitespace-nowrap shrink-0"
           >
-            <ArrowLeft className="h-3.5 w-3.5" />
-            Back to Home
+            <ArrowLeft className="h-3.5 w-3.5 shrink-0" />
+            <span>Back to Home</span>
           </Link>
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-xs font-medium text-amber-900">
-            <ShieldCheck className="h-3.5 w-3.5" />
-            Document Status: [Founder approval required]
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-xs font-medium text-amber-900 whitespace-nowrap shrink-0">
+            <ShieldCheck className="h-3.5 w-3.5 shrink-0" />
+            <span>Document Status: [Founder approval required]</span>
           </span>
         </div>
 
