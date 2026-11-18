@@ -59,6 +59,60 @@ async def process_project_scope(payload: dict):
     
     return {"status": "ready", "milestones": schedule}`,
   },
+  rust: {
+    title: "Rust Core Engine",
+    filename: "client.rs",
+    language: "rust",
+    code: `use eagle_sdk::{EagleClient, ProjectInquiry};
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let client = EagleClient::builder()
+        .api_key(std::env::var("EAGLE_SANDBOX_KEY")?)
+        .endpoint("https://api.eagletechnology.et/v1")
+        .build()?;
+
+    let inquiry = ProjectInquiry::builder()
+        .organization("Horn Horizon Tech")
+        .pillar("software_platforms")
+        .build();
+
+    let confirmation = client.inquiries().submit(inquiry).await?;
+    println!("Inquiry registered: {}", confirmation.id);
+    Ok(())
+}`,
+  },
+  go: {
+    title: "Go Microservice",
+    filename: "main.go",
+    language: "go",
+    code: `package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    "github.com/eagletechnology/eagle-go/v1"
+)
+
+func main() {
+    client := eagle.NewClient(
+        eagle.WithAPIKey(os.Getenv("EAGLE_SANDBOX_KEY")),
+        eagle.WithRegion("addis-ababa-edge-1"),
+    )
+
+    req := &eagle.MilestoneVerifyRequest{
+        MilestoneID: "ms_arch_01",
+        Environment: "sandbox",
+    }
+
+    res, err := client.Milestones.Verify(context.Background(), req)
+    if err != nil {
+        panic(err)
+    }
+    fmt.Printf("Milestone Hash: %s | Status: %s\\n", res.Hash, res.Status)
+}`,
+  },
   bash: {
     title: "cURL API Contract",
     filename: "request.sh",
@@ -104,7 +158,7 @@ const PIPELINE_STEPS = [
 ];
 
 export function TechPlayground() {
-  const [activeTab, setActiveTab] = useState<"typescript" | "python" | "bash">("typescript");
+  const [activeTab, setActiveTab] = useState<"typescript" | "python" | "rust" | "go" | "bash">("typescript");
   const [copied, setCopied] = useState(false);
   const [simulating, setSimulating] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -196,18 +250,26 @@ export function TechPlayground() {
             </div>
 
             <div className="flex items-center gap-1">
-              {(["typescript", "python", "bash"] as const).map((tab) => (
+              {(
+                [
+                  { id: "typescript", label: "TypeScript" },
+                  { id: "python", label: "Python" },
+                  { id: "rust", label: "Rust" },
+                  { id: "go", label: "Go" },
+                  { id: "bash", label: "cURL" },
+                ] as const
+              ).map((tab) => (
                 <button
-                  key={tab}
+                  key={tab.id}
                   type="button"
-                  onClick={() => setActiveTab(tab)}
+                  onClick={() => setActiveTab(tab.id)}
                   className={`rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${
-                    activeTab === tab
+                    activeTab === tab.id
                       ? "bg-[var(--color-brown-gold)] text-white"
                       : "text-[var(--color-soft-sand)]/70 hover:bg-white/5 hover:text-white"
                   }`}
                 >
-                  {tab === "typescript" ? "TypeScript" : tab === "python" ? "Python" : "cURL"}
+                  {tab.label}
                 </button>
               ))}
 
